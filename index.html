@@ -3,350 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>建築材料・施工研究室 | 静岡理工科大学 理工学部 建築学科</title>
+  <title>建築材料・施工研究室 | 静岡理工科大学</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a3a5c;
-      --primary-light: #2a5a8c;
-      --accent: #c8a45a;
-      --bg: #f8f7f4;
-      --card-bg: #ffffff;
-      --text: #333333;
-      --text-light: #666666;
-      --border: #e0ddd6;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
     body {
-      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-      color: var(--text);
-      background: var(--bg);
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
       line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
-    header {
-      background: var(--primary);
-      color: #fff;
-      position: sticky;
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 40px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 24px;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .header-title {
-      padding: 16px 0;
+    nav.scrolled {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 40px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
     }
 
-    .header-title h1 {
-      font-size: 1.3rem;
+    .nav-logo {
+      font-family: "Noto Sans JP", sans-serif;
       font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .header-title .subtitle {
-      font-size: 0.75rem;
-      opacity: 0.8;
-    }
-
-    nav a {
-      color: #fff;
+      font-size: 0.95rem;
+      color: var(--white);
       text-decoration: none;
-      font-size: 0.85rem;
-      padding: 20px 14px;
-      display: inline-block;
-      transition: background 0.2s;
+      letter-spacing: 0.02em;
+      transition: color 0.4s;
     }
 
-    nav a:hover {
-      background: var(--primary-light);
+    nav.scrolled .nav-logo {
+      color: var(--gray-900);
     }
 
-    /* Hero */
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.4s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    nav.scrolled .nav-links a {
+      color: var(--gray-500);
+    }
+
+    nav.scrolled .nav-links a:hover {
+      color: var(--gray-900);
+    }
+
+    /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      color: #fff;
-      padding: 60px 24px;
-      text-align: center;
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
     }
 
-    .hero h2 {
-      font-size: 2rem;
-      margin-bottom: 12px;
-      letter-spacing: 0.08em;
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
 
-    .hero p {
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.15) 40%,
+        rgba(0,0,0,0.6) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 60px 80px;
+      max-width: 900px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .hero-subtitle {
       font-size: 1rem;
-      opacity: 0.9;
-      max-width: 700px;
-      margin: 0 auto;
+      color: rgba(255,255,255,0.8);
+      font-weight: 300;
+      max-width: 550px;
+      line-height: 1.9;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s 0.7s forwards;
     }
 
-    /* Main */
-    main {
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll .line {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-scroll .line::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      animation: scrollLine 1.8s infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      padding: 120px 60px;
+    }
+
+    .section-inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 24px;
     }
 
-    section {
-      margin-bottom: 56px;
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
     }
 
-    .section-title {
-      font-size: 1.4rem;
-      color: var(--primary);
-      border-left: 4px solid var(--accent);
-      padding-left: 14px;
-      margin-bottom: 24px;
+    .section-heading {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 900;
+      color: var(--gray-900);
+      line-height: 1.3;
+      margin-bottom: 48px;
     }
 
-    /* Profile Card */
-    .profile-card {
-      display: flex;
-      gap: 36px;
-      background: var(--card-bg);
-      border-radius: 10px;
-      padding: 36px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .profile-photo img {
-      width: 200px;
-      height: 260px;
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== ABOUT / PROFESSOR ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-photo {
+      position: relative;
+    }
+
+    .about-photo img {
+      width: 100%;
+      aspect-ratio: 3/4;
       object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 4px;
     }
 
-    .profile-info h3 {
-      font-size: 1.5rem;
-      color: var(--primary);
+    .about-photo::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: -12px;
+      bottom: -12px;
+      border: 1.5px solid var(--accent);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .about-name {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gray-900);
       margin-bottom: 4px;
     }
 
-    .profile-info .name-en {
+    .about-name-en {
+      font-size: 0.85rem;
+      color: var(--gray-400);
+      font-weight: 400;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .about-affiliation {
       font-size: 0.9rem;
-      color: var(--text-light);
-      margin-bottom: 16px;
+      color: var(--gray-500);
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--gray-200);
     }
 
-    .profile-info .affiliation {
-      font-size: 0.95rem;
-      color: var(--text-light);
-      margin-bottom: 16px;
-    }
-
-    .profile-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .profile-table th {
-      text-align: left;
-      font-weight: 600;
-      color: var(--primary);
-      padding: 6px 16px 6px 0;
-      width: 100px;
-      vertical-align: top;
-      font-size: 0.9rem;
-      white-space: nowrap;
-    }
-
-    .profile-table td {
-      padding: 6px 0;
-      font-size: 0.9rem;
-    }
-
-    /* Cards */
-    .card {
-      background: var(--card-bg);
-      border-radius: 10px;
-      padding: 28px 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
-    }
-
-    .card + .card {
-      margin-top: 20px;
-    }
-
-    .card h4 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Timeline */
-    .timeline {
-      list-style: none;
-    }
-
-    .timeline li {
+    .about-details {
       display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .about-detail {
+      display: grid;
+      grid-template-columns: 100px 1fr;
       gap: 16px;
-      padding: 6px 0;
-      font-size: 0.9rem;
     }
 
-    .timeline .year {
-      flex-shrink: 0;
-      width: 140px;
-      color: var(--primary-light);
+    .about-detail dt {
+      font-size: 0.75rem;
       font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding-top: 3px;
     }
 
-    /* Awards */
-    .award-list {
-      list-style: none;
+    .about-detail dd {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      line-height: 1.7;
     }
 
-    .award-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid #f0efe9;
+    /* ===== MEMBERS ===== */
+    .members-section {
+      background: var(--gray-50);
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 32px;
+    }
+
+    .member-card {
+      text-align: center;
+      cursor: default;
+    }
+
+    .member-card .member-img-wrap {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .member-card .member-img-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+      z-index: 1;
+    }
+
+    .member-card:hover .member-img-wrap::before {
+      border-color: var(--accent);
+    }
+
+    .member-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .member-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .member-name {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 4px;
+    }
+
+    .member-role {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== TIMELINE (Education / Career) ===== */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--gray-200);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -44px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-year {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .timeline-text {
       font-size: 0.9rem;
-      display: flex;
-      gap: 12px;
+      color: var(--gray-600);
+      line-height: 1.6;
     }
 
-    .award-list li:last-child {
+    /* ===== AWARDS ===== */
+    .awards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .award-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--gray-100);
+      transition: background 0.3s;
+    }
+
+    .award-item:last-child {
       border-bottom: none;
     }
 
     .award-year {
       flex-shrink: 0;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.75rem;
-      padding: 2px 10px;
-      border-radius: 3px;
-      height: fit-content;
-      margin-top: 2px;
-    }
-
-    /* Publications */
-    .pub-year-heading {
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      color: var(--primary);
-      margin: 20px 0 10px;
-      padding-bottom: 4px;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
+      color: var(--accent);
+      width: 48px;
+      padding-top: 2px;
     }
 
-    .pub-year-heading:first-child {
-      margin-top: 0;
-    }
-
-    .pub-list {
-      list-style: none;
-      counter-reset: pub;
-    }
-
-    .pub-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid #f0efe9;
-      font-size: 0.85rem;
-      line-height: 1.7;
-      display: flex;
-      gap: 10px;
-    }
-
-    .pub-list li:last-child {
-      border-bottom: none;
-    }
-
-    .pub-list li::before {
-      counter-increment: pub;
-      content: counter(pub) ".";
-      flex-shrink: 0;
-      color: var(--primary-light);
-      font-weight: 700;
-      min-width: 24px;
-    }
-
-    /* Society tags */
-    .society-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .society-tag {
-      background: var(--primary);
-      color: #fff;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-
-    /* Activities list */
-    .activity-list {
-      list-style: none;
-    }
-
-    .activity-list li {
-      padding: 6px 0;
+    .award-text {
       font-size: 0.9rem;
-      padding-left: 16px;
-      position: relative;
+      color: var(--gray-600);
+      line-height: 1.7;
     }
 
-    .activity-list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 14px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    /* Tabs */
+    /* ===== PUBLICATIONS ===== */
     .pub-tabs {
       display: flex;
-      gap: 4px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid var(--border);
+      gap: 0;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--gray-200);
     }
 
     .pub-tab {
-      padding: 10px 20px;
+      padding: 14px 28px;
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 0.9rem;
-      color: var(--text-light);
+      font-size: 0.85rem;
+      font-family: "Noto Sans JP", sans-serif;
+      font-weight: 500;
+      color: var(--gray-400);
       position: relative;
-      transition: color 0.2s;
-      font-family: inherit;
+      transition: color 0.3s;
+    }
+
+    .pub-tab:hover {
+      color: var(--gray-600);
     }
 
     .pub-tab.active {
-      color: var(--primary);
-      font-weight: 700;
+      color: var(--gray-900);
     }
 
     .pub-tab.active::after {
       content: "";
       position: absolute;
-      bottom: -2px;
+      bottom: -1px;
       left: 0;
       right: 0;
       height: 2px;
@@ -361,410 +554,565 @@
       display: block;
     }
 
-    /* Footer */
-    footer {
-      background: var(--primary);
-      color: #fff;
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 0.85rem;
-      margin-top: 40px;
+    .pub-year {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin: 36px 0 16px;
     }
 
-    footer .footer-info {
-      opacity: 0.8;
+    .pub-year:first-child {
+      margin-top: 0;
+    }
+
+    .pub-item {
+      padding: 12px 0;
+      font-size: 0.85rem;
+      color: var(--gray-500);
       line-height: 1.8;
+      border-bottom: 1px solid var(--gray-100);
+      transition: color 0.3s;
     }
 
-    /* Group photo */
-    .group-photo {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-      margin-bottom: 8px;
+    .pub-item:hover {
+      color: var(--gray-700);
     }
 
-    .group-photo-caption {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-bottom: 32px;
-    }
-
-    /* Members grid */
-    .members-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 24px;
-    }
-
-    .member-card {
-      background: var(--card-bg);
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
-      transition: transform 0.2s;
-    }
-
-    .member-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .member-card img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .member-card .member-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 4px;
-    }
-
-    .member-card .member-grade {
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    /* News / Media */
-    .news-list {
-      list-style: none;
-    }
-
-    .news-list li {
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    .news-list li:last-child {
+    .pub-item:last-child {
       border-bottom: none;
     }
 
-    .news-tag {
-      flex-shrink: 0;
+    /* ===== SOCIETIES ===== */
+    .society-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .society-tag {
+      padding: 8px 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid var(--gray-200);
+      border-radius: 100px;
+      color: var(--gray-600);
+      transition: all 0.3s;
+    }
+
+    .society-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .activity-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .activity-list li {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .activity-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
       background: var(--accent);
-      color: #fff;
-      font-size: 0.75rem;
-      padding: 3px 12px;
-      border-radius: 3px;
-      font-weight: 600;
     }
 
-    .news-list a {
-      color: var(--primary);
+    /* ===== MEDIA / NEWS ===== */
+    .media-section {
+      background: var(--gray-900);
+      color: var(--white);
+    }
+
+    .media-section .section-label {
+      color: var(--accent-light);
+    }
+
+    .media-section .section-heading {
+      color: var(--white);
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .media-card {
+      display: block;
+      background: var(--gray-800);
+      border-radius: 8px;
+      padding: 36px;
       text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .media-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .media-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .media-card:hover {
+      transform: translateY(-4px);
+      background: var(--gray-700);
+    }
+
+    .media-tag {
+      display: inline-block;
+      font-size: 0.65rem;
       font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
     }
 
-    .news-list a:hover {
-      text-decoration: underline;
+    .media-card h4 {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.5;
     }
 
-    .news-desc {
+    .media-card p {
       font-size: 0.85rem;
-      color: var(--text-light);
-      margin-top: 4px;
+      color: var(--gray-400);
+      line-height: 1.6;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .profile-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      .hero h2 { font-size: 1.5rem; }
-      nav { display: none; }
-      .timeline li { flex-direction: column; gap: 2px; }
-      .timeline .year { width: auto; }
+    .media-card .arrow {
+      position: absolute;
+      bottom: 36px;
+      right: 36px;
+      font-size: 1.2rem;
+      color: var(--gray-500);
+      transition: all 0.3s;
+    }
+
+    .media-card:hover .arrow {
+      color: var(--accent-light);
+      transform: translateX(4px);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 60px;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-info h5 {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    .footer-info p {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      line-height: 1.8;
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: var(--gray-300);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 80px 0;
+      background: var(--gray-50);
+    }
+
+    .marquee {
+      display: flex;
+      gap: 60px;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-text {
+      font-family: "Inter", sans-serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      color: var(--gray-100);
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .section { padding: 80px 24px; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-photo { max-width: 250px; }
+      .members-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .media-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .members-grid { grid-template-columns: repeat(2, 1fr); }
+      .member-card .member-img-wrap { width: 100px; height: 100px; }
+    }
+
+    /* ===== HORIZONTAL RULE ===== */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--gray-100);
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="header-title">
-      <h1>建築材料・施工研究室</h1>
-      <div class="subtitle">静岡理工科大学 理工学部 建築学科</div>
-    </div>
-    <nav>
-      <a href="#about">教員紹介</a>
-      <a href="#members">メンバー</a>
-      <a href="#education">学歴・職歴</a>
-      <a href="#awards">受賞</a>
-      <a href="#publications">論文</a>
-      <a href="#activities">学会活動</a>
-      <a href="#news">メディア</a>
-    </nav>
-  </div>
-</header>
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">建築材料・施工研究室</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#members">Members</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#media">Media</a></li>
+  </ul>
+</nav>
 
-<div class="hero">
-  <h2>Architectural Materials &amp; Construction Lab</h2>
-  <p>コンクリート材料の非破壊検査・AIを活用した品質評価に関する研究を行っています</p>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-image">
+    <img src="images/hero.jpg" alt="建築材料・施工研究室">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-label">Shizuoka Institute of Science and Technology</span>
+    <h1 class="hero-title">建築材料・施工<br>研究室</h1>
+    <p class="hero-subtitle">コンクリート材料の非破壊検査・AIを活用した品質評価に関する研究を通じて、持続可能な建築の未来を拓く</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-text">Architectural Materials</span>
+    <span class="marquee-text">Construction Engineering</span>
+    <span class="marquee-text">Non-Destructive Testing</span>
+    <span class="marquee-text">AI-Driven Quality Evaluation</span>
+    <span class="marquee-text">Pervious Concrete</span>
+    <span class="marquee-text">Architectural Materials</span>
+    <span class="marquee-text">Construction Engineering</span>
+    <span class="marquee-text">Non-Destructive Testing</span>
+    <span class="marquee-text">AI-Driven Quality Evaluation</span>
+    <span class="marquee-text">Pervious Concrete</span>
+  </div>
 </div>
 
-<main>
-
-  <!-- 教員紹介 -->
-  <section id="about">
-    <h3 class="section-title">教員紹介</h3>
-    <div class="profile-card">
-      <div class="profile-photo">
-        <img src="images/professor.jpeg" alt="エルドンオチル教員写真">
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Professor</span>
+      <h2 class="section-heading">教員紹介</h2>
+    </div>
+    <div class="about-grid fade-in">
+      <div class="about-photo">
+        <img src="images/professor.jpeg" alt="エルドンオチル">
       </div>
-      <div class="profile-info">
-        <h3>エルドンオチル</h3>
-        <div class="name-en">E Ridengaoqier</div>
-        <div class="affiliation">静岡理工科大学 理工学部 建築学科</div>
-        <table class="profile-table">
-          <tr>
-            <th>専門分野</th>
-            <td>建築材料学・コンクリート工学・非破壊検査・AI応用</td>
-          </tr>
-          <tr>
-            <th>研究テーマ</th>
-            <td>ポーラスコンクリートの品質評価、深層学習による構造部材の劣化予測、非破壊試験法の開発</td>
-          </tr>
-          <tr>
-            <th>学位</th>
-            <td>博士（工学）（三重大学, 2019年9月）</td>
-          </tr>
-        </table>
+      <div>
+        <h3 class="about-name">エルドンオチル</h3>
+        <p class="about-name-en">E Ridengaoqier, Ph.D.</p>
+        <p class="about-affiliation">静岡理工科大学 理工学部 建築学科</p>
+        <dl class="about-details">
+          <div class="about-detail">
+            <dt>専門</dt>
+            <dd>建築材料学・コンクリート工学<br>非破壊検査・AI応用</dd>
+          </div>
+          <div class="about-detail">
+            <dt>研究</dt>
+            <dd>ポーラスコンクリートの品質評価<br>深層学習による構造部材の劣化予測<br>非破壊試験法の開発</dd>
+          </div>
+          <div class="about-detail">
+            <dt>学位</dt>
+            <dd>博士（工学）三重大学, 2019</dd>
+          </div>
+        </dl>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- メンバー -->
-  <section id="members">
-    <h3 class="section-title">メンバー</h3>
-    <img src="images/group.jpg" alt="研究室集合写真" class="group-photo">
-    <p class="group-photo-caption">2026年度 研究室メンバー</p>
-    <div class="members-grid">
-      <!-- 2026年度メンバー：名前・写真・学年を更新してください -->
-      <!--
-        メンバー追加テンプレート：
-        <div class="member-card">
-          <img src="images/ファイル名.jpg" alt="名前">
-          <div class="member-name">名前</div>
-          <div class="member-grade">◯年生 / 修士◯年</div>
-        </div>
+<!-- Members -->
+<section class="section members-section" id="members">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Members</span>
+      <h2 class="section-heading">2026年度メンバー</h2>
+    </div>
+    <div class="members-grid fade-in">
+      <!-- 2026年度メンバー：名前・写真・学年を更新してください
+           テンプレート:
+           <div class="member-card">
+             <div class="member-img-wrap"><img src="images/ファイル名.jpg" alt="名前"></div>
+             <div class="member-name">名前</div>
+             <div class="member-role">◯年生</div>
+           </div>
       -->
       <div class="member-card">
-        <img src="images/ohata.jpg" alt="大畑 亮輔">
+        <div class="member-img-wrap"><img src="images/ohata.jpg" alt="大畑 亮輔"></div>
         <div class="member-name">大畑 亮輔</div>
-        <div class="member-grade">4年生</div>
+        <div class="member-role">4年生</div>
       </div>
       <div class="member-card">
-        <img src="images/ogiso.jpg" alt="小木曽 太一">
+        <div class="member-img-wrap"><img src="images/ogiso.jpg" alt="小木曽 太一"></div>
         <div class="member-name">小木曽 太一</div>
-        <div class="member-grade">4年生</div>
+        <div class="member-role">4年生</div>
       </div>
       <div class="member-card">
-        <img src="images/miyata.jpg" alt="宮田 恭輔">
+        <div class="member-img-wrap"><img src="images/miyata.jpg" alt="宮田 恭輔"></div>
         <div class="member-name">宮田 恭輔</div>
-        <div class="member-grade">4年生</div>
+        <div class="member-role">4年生</div>
       </div>
       <div class="member-card">
-        <img src="images/yamakawa.jpg" alt="山河 拓馬">
+        <div class="member-img-wrap"><img src="images/yamakawa.jpg" alt="山河 拓馬"></div>
         <div class="member-name">山河 拓馬</div>
-        <div class="member-grade">4年生</div>
+        <div class="member-role">4年生</div>
       </div>
       <div class="member-card">
-        <img src="images/yamada.jpg" alt="山田 匠海">
+        <div class="member-img-wrap"><img src="images/yamada.jpg" alt="山田 匠海"></div>
         <div class="member-name">山田 匠海</div>
-        <div class="member-grade">4年生</div>
+        <div class="member-role">4年生</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 学歴・職歴 -->
-  <section id="education">
-    <h3 class="section-title">学歴・職歴</h3>
-    <div class="card">
-      <h4>学歴</h4>
-      <ul class="timeline">
-        <li><span class="year">2014年 7月</span><span>中国内モンゴル工業大学 土木学院 土木工程専攻 卒業</span></li>
-        <li><span class="year">2014年 10月</span><span>三重大学大学院 工学研究科 建築学専攻 博士前期課程 入学</span></li>
-        <li><span class="year">2016年 9月</span><span>三重大学大学院 工学研究科 建築学専攻 博士前期課程 修了</span></li>
-        <li><span class="year">2016年 10月</span><span>三重大学大学院 工学研究科 システム工学専攻 博士後期課程 入学</span></li>
-        <li><span class="year">2019年 9月</span><span>三重大学大学院 工学研究科 システム工学専攻 博士後期課程 修了</span></li>
-      </ul>
+<!-- Career -->
+<section class="section" id="career">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Career</span>
+      <h2 class="section-heading">学歴・職歴</h2>
     </div>
-    <div class="card">
-      <h4>職歴</h4>
-      <ul class="timeline">
-        <li><span class="year">2020年4月〜2025年3月</span><span>東京理科大学 工学部 建築学科 嘱託助教</span></li>
-        <li><span class="year">2025年4月〜</span><span>静岡理工科大学 理工学部 建築学科 着任</span></li>
-      </ul>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px;" class="fade-in">
+      <div>
+        <h4 style="font-size:0.75rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray-400); margin-bottom:24px;">Education</h4>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2014.07</div>
+            <div class="timeline-text">中国内モンゴル工業大学 土木学院 卒業</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2016.09</div>
+            <div class="timeline-text">三重大学大学院 工学研究科 建築学専攻 修士課程 修了</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2019.09</div>
+            <div class="timeline-text">三重大学大学院 工学研究科 システム工学専攻 博士課程 修了</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:0.75rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray-400); margin-bottom:24px;">Experience</h4>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2020.04 — 2025.03</div>
+            <div class="timeline-text">東京理科大学 工学部 建築学科 嘱託助教</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025.04 —</div>
+            <div class="timeline-text">静岡理工科大学 理工学部 建築学科</div>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 受賞 -->
-  <section id="awards">
-    <h3 class="section-title">受賞</h3>
-    <div class="card">
-      <ul class="award-list">
-        <li><span class="award-year">2025</span><span>Best Paper Presentation, 5th International Symposium on Concrete and Structures for the Next Generation (CSN2025)</span></li>
-        <li><span class="award-year">2024</span><span>The Best Presentation, the 10th Conference of the Asian Concrete Federation</span></li>
-        <li><span class="award-year">2019</span><span>三重大学学長賞（令和元年度博士後期課程修了時）</span></li>
-        <li><span class="award-year">2019</span><span>第41回コンクリート工学講演会 年次論文奨励賞</span></li>
-        <li><span class="award-year">2017</span><span>第39回コンクリート工学講演会 年次論文奨励賞</span></li>
-        <li><span class="award-year">2016</span><span>2016年度日本建築学会大会（九州）学術講演会 材料施工部門若手優秀発表賞</span></li>
-        <li><span class="award-year">2016</span><span>三重大学学長賞（平成28年度博士前期課程修了時）</span></li>
-      </ul>
-    </div>
-  </section>
+<hr class="divider">
 
-  <!-- 論文 -->
-  <section id="publications">
-    <h3 class="section-title">業績一覧</h3>
-    <div class="card">
+<!-- Awards -->
+<section class="section" id="awards">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Awards</span>
+      <h2 class="section-heading">受賞</h2>
+    </div>
+    <div class="awards-list fade-in">
+      <div class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text">Best Paper Presentation, 5th International Symposium on Concrete and Structures for the Next Generation (CSN2025)</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2024</span>
+        <span class="award-text">The Best Presentation, the 10th Conference of the Asian Concrete Federation</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2019</span>
+        <span class="award-text">三重大学学長賞（令和元年度博士後期課程修了時）</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2019</span>
+        <span class="award-text">第41回コンクリート工学講演会 年次論文奨励賞</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2017</span>
+        <span class="award-text">第39回コンクリート工学講演会 年次論文奨励賞</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2016</span>
+        <span class="award-text">日本建築学会大会（九州）学術講演会 材料施工部門若手優秀発表賞</span>
+      </div>
+      <div class="award-item">
+        <span class="award-year">2016</span>
+        <span class="award-text">三重大学学長賞（平成28年度博士前期課程修了時）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Publications -->
+<section class="section" id="publications" style="background:var(--gray-50);">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Publications</span>
+      <h2 class="section-heading">業績一覧</h2>
+    </div>
+    <div class="fade-in">
       <div class="pub-tabs">
-        <button class="pub-tab active" onclick="switchTab(this, 'reviewed')">査読付き論文</button>
-        <button class="pub-tab" onclick="switchTab(this, 'intl')">国際会議（査読無し）</button>
-        <button class="pub-tab" onclick="switchTab(this, 'domestic')">国内会議</button>
+        <button class="pub-tab active" onclick="switchTab(this,'reviewed')">査読付き論文</button>
+        <button class="pub-tab" onclick="switchTab(this,'intl')">国際会議</button>
+        <button class="pub-tab" onclick="switchTab(this,'domestic')">国内会議</button>
       </div>
 
-      <!-- 査読付き論文 -->
       <div id="reviewed" class="pub-panel active">
-        <div class="pub-year-heading">2025</div>
-        <ol class="pub-list">
-          <li>根路銘 安史, 今本 啓一, 小田島 由梨, E Ridengaoqier, 清原 千鶴, 崎原 康平, 木野瀬 透, CHEN Junye, 高炉セメントC種を用いた島嶼国大宜味村役場旧庁舎のコンクリート調査, 日本建築学会技術報告集, Vol. 31, No.77, pp.36-39, 2025.2</li>
-          <li>細矢 仁, 今本 啓一, E Ridengaoqier, 清原 千鶴, 超薄肉プレキャストプレストレスト部材を用いた建築の空間有効化及び廃材削減事例, 日本建築学会技術報告集, Vol. 31, No.77, pp.444-448, 2025.2</li>
-          <li>Ridengaoqier E, Kei-ichi Imamoto, Takafumi Noguchi, Ichizou Kishimoto, Kenji Kabayama, Predicting Deterioration of Reinforced Concrete Structural Members Using Deep Learning and Generative AI, CSN2025, 2025.3</li>
-        </ol>
+        <div class="pub-year">2025</div>
+        <div class="pub-item">根路銘 安史, 今本 啓一, 小田島 由梨, E Ridengaoqier, 清原 千鶴, 崎原 康平, 木野瀬 透, CHEN Junye, 高炉セメントC種を用いた島嶼国大宜味村役場旧庁舎のコンクリート調査, 日本建築学会技術報告集, Vol. 31, No.77, pp.36-39, 2025.2</div>
+        <div class="pub-item">細矢 仁, 今本 啓一, E Ridengaoqier, 清原 千鶴, 超薄肉プレキャストプレストレスト部材を用いた建築の空間有効化及び廃材削減事例, 日本建築学会技術報告集, Vol. 31, No.77, pp.444-448, 2025.2</div>
+        <div class="pub-item">Ridengaoqier E, Kei-ichi Imamoto, Takafumi Noguchi, Ichizou Kishimoto, Kenji Kabayama, Predicting Deterioration of Reinforced Concrete Structural Members Using Deep Learning and Generative AI, CSN2025, 2025.3</div>
 
-        <div class="pub-year-heading">2024</div>
-        <ol class="pub-list">
-          <li>Ridengaoqier E, Basic study on estimating porosity of pervious concrete using AI, 78th RILEM week &amp; RILEM conference on smart materials and structures, 2024.8</li>
-          <li>Ryosuke Nakajima, Kei-ichi Imamoto, Ridengaoqier E, Chizuru Kiyohara, Evaluating the durability of yakisugi -lamune onsen building as a research subject-, 78th RILEM week, 2024.8</li>
-          <li>Tamako Abe, Kei-ichi Imamoto, Ridengaoqier E, Chizuru Kiyohara, Physical properties of pervious concrete with clinker-free cement, 78th RILEM week, 2024.8</li>
-          <li>Sota Ogura, Kei-ichi Imamoto, Ridengaoqier E, Chizuru Kiyohara, Fundamental study on diagnosis of termite-induced timber by non/semi-destructive methods, 78th RILEM week, 2024.8</li>
-          <li>阿部珠子, 今本啓一, エルドンオチル, 田中章夫, 高炉スラグ微粉末を使用したクリンカーフリーポーラスコンクリートの基本物性に関する研究, コンクリート工学年次論文集, Vol.46, 2024.8</li>
-          <li>根路銘安史, 今本啓一, 多賀 紀晃, E Ridengaoqier, 清原千鶴, 飛来塩分環境下における内在塩分RC造建築物の劣化に及ぼす立地環境の影響, 日本建築学会技術報告集, Vol75, pp.604-607, 2024.6</li>
-        </ol>
+        <div class="pub-year">2024</div>
+        <div class="pub-item">Ridengaoqier E, Basic study on estimating porosity of pervious concrete using AI, 78th RILEM week &amp; RILEM conference on smart materials and structures, 2024.8</div>
+        <div class="pub-item">Ryosuke Nakajima, Kei-ichi Imamoto, Ridengaoqier E, Chizuru Kiyohara, Evaluating the durability of yakisugi, 78th RILEM week, 2024.8</div>
+        <div class="pub-item">Tamako Abe, Kei-ichi Imamoto, Ridengaoqier E, Chizuru Kiyohara, Physical properties of pervious concrete with clinker-free cement, 78th RILEM week, 2024.8</div>
+        <div class="pub-item">阿部珠子, 今本啓一, エルドンオチル, 田中章夫, 高炉スラグ微粉末を使用したクリンカーフリーポーラスコンクリートの基本物性に関する研究, コンクリート工学年次論文集, Vol.46, 2024.8</div>
+        <div class="pub-item">根路銘安史, 今本啓一, 多賀 紀晃, E Ridengaoqier, 清原千鶴, 飛来塩分環境下における内在塩分RC造建築物の劣化に及ぼす立地環境の影響, 日本建築学会技術報告集, Vol75, pp.604-607, 2024.6</div>
 
-        <div class="pub-year-heading">2023</div>
-        <ol class="pub-list">
-          <li>Ridengaoqier E, Kei-ichi Imamoto, Experimental Study on Evaluation Accuracy of Pervious Concrete Dynamic Elastic Modulus Using Mobile Devices, The 14th Int. Conf. Modern Building Materials, Structures and Techniques, Vilnius, Lithuania, 2023.10</li>
-          <li>Kei-ichi Imamoto, Endo T., Ridengaoqier E, Kiyohara C., Development of Thermal Storage Building Exterior Using Phase Change Materials, The 14th Int. Conf. Modern Building Materials, Vilnius, Lithuania, 2023.10</li>
-          <li>Ridengaoqier E, S. Hatanaka, K. Imamoto, C. Kiyohara, T. Phoo-ngernkham, Experimental Study on Compressive and Flexural Strengths of High Strength Pervious Concrete Using Various Binding Materials, 9th World Congress on MCM, London, UK, 2023.8</li>
-          <li>エルドンオチル, 栗田哲, ディープラーニングによるポーラスコンクリートの空隙率推定に関する基礎的研究, コンクリート工学年次論文集, Vol.45, No.1, pp.1150-1155, 2023.7</li>
-        </ol>
+        <div class="pub-year">2023</div>
+        <div class="pub-item">Ridengaoqier E, Kei-ichi Imamoto, Experimental Study on Evaluation Accuracy of Pervious Concrete Dynamic Elastic Modulus Using Mobile Devices, The 14th Int. Conf. Modern Building Materials, Vilnius, Lithuania, 2023.10</div>
+        <div class="pub-item">Ridengaoqier E, S. Hatanaka, K. Imamoto, C. Kiyohara, T. Phoo-ngernkham, Experimental Study on Compressive and Flexural Strengths of High Strength Pervious Concrete, 9th World Congress on MCM, London, 2023.8</div>
+        <div class="pub-item">エルドンオチル, 栗田哲, ディープラーニングによるポーラスコンクリートの空隙率推定に関する基礎的研究, コンクリート工学年次論文集, Vol.45, No.1, pp.1150-1155, 2023.7</div>
 
-        <div class="pub-year-heading">2021</div>
-        <ol class="pub-list">
-          <li>Ridengaoqier E, S. Hatanaka, P. Palamy, S. Kurita, Experimental study on the porosity evaluation of pervious concrete by using ultrasonic wave testing on surfaces, Construction and Building Materials, Vol. 300, 123959, 2021</li>
-          <li>Ridengaoqier E, S. Hatanaka, Prediction of porosity of pervious concrete based on its dynamic elastic modulus, Results in Materials, Vol. 10, 100192, 2021</li>
-        </ol>
+        <div class="pub-year">2021</div>
+        <div class="pub-item">Ridengaoqier E, S. Hatanaka, P. Palamy, S. Kurita, Experimental study on the porosity evaluation of pervious concrete by using ultrasonic wave testing on surfaces, Construction and Building Materials, Vol. 300, 123959, 2021</div>
+        <div class="pub-item">Ridengaoqier E, S. Hatanaka, Prediction of porosity of pervious concrete based on its dynamic elastic modulus, Results in Materials, Vol. 10, 100192, 2021</div>
 
-        <div class="pub-year-heading">2019</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 曹偉, 畑中重光, 打音法によるポーラスコンクリートの空隙率推定, コンクリート工学年次論文集, Vol.51, pp.1439-1444, 2019.7</li>
-          <li>曹偉, エルドンオチル, 畑中重光, 接着媒質の影響を考慮した超音波法（表面法）によるポーラスコンクリートの空隙率推定, コンクリート工学年次論文集, Vol.41, No.1, pp.1433-1438, 2019.7</li>
-        </ol>
+        <div class="pub-year">2018 — 2019</div>
+        <div class="pub-item">エルドンオチル, 三島直生, 畑中重光, 超音波法によるポーラスコンクリートの空隙率推定手法に関する研究, 日本建築学会構造系論文集, Vol.83, No.749, pp.943-951, 2018.7</div>
+        <div class="pub-item">Ridengaoqier E, R. Fujiki, S. Hatanaka, Study on Quality Evaluation of Porous Concrete Using Void Ratio Estimated by Ultrasonic Wave Velocity, 43rd Conf., Singapore, pp.371-380, 2018.8</div>
+        <div class="pub-item">エルドンオチル, 曹偉, 畑中重光, 打音法によるポーラスコンクリートの空隙率推定, コンクリート工学年次論文集, Vol.51, pp.1439-1444, 2019.7</div>
 
-        <div class="pub-year-heading">2018</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの超音波伝播速度に及ぼす接触媒質の影響に関する実験的研究, コンクリート工学年次論文集, Vol.40, No.1, pp.1365-1370, 2018.8</li>
-          <li>Ridengaoqier E, R. Fujiki, S. Hatanaka, Study on Quality Evaluation of Porous Concrete Using Void Ratio Estimated by Ultrasonic Wave Velocity, 43rd Conf. Our World in Concrete &amp; Structures, Singapore, pp.371-380, 2018.8</li>
-          <li>エルドンオチル, 三島直生, 畑中重光, 超音波法によるポーラスコンクリートの空隙率推定手法に関する研究, 日本建築学会構造系論文集, Vol.83, No.749, pp.943-951, 2018.7</li>
-        </ol>
-
-        <div class="pub-year-heading">2015〜2017</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 藤木諒将, 三島直生, 畑中重光, 現場施工されたポーラスコンクリートの品質管理に関する実験的研究, コンクリート工学年次論文集, Vol.39, No.1, pp.1489-1494, 2017.7</li>
-          <li>エルドンオチル, 藤木諒将, 三島直生, 畑中重光, 超音波によるポーラスコンクリートの空隙率および曲げ強度の推定に関する実験的研究, コンクリート工学年次論文集, Vol.38, No.1, pp.1725-1730, 2016.7</li>
-          <li>藤木諒将, エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの曲げ強度と圧縮強度の関係に及ぼす細骨材の影響に関する実験的研究, コンクリート工学年次論文集, Vol.38, No.1, pp.1719-1724, 2016.7</li>
-          <li>エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの圧縮強度と曲げ強度の関係に関する実験的研究, コンクリート工学年次論文集, Vol.37, No.1, pp.1345-1350, 2015.7</li>
-        </ol>
+        <div class="pub-year">2015 — 2017</div>
+        <div class="pub-item">エルドンオチル, 藤木諒将, 三島直生, 畑中重光, 現場施工されたポーラスコンクリートの品質管理に関する実験的研究, コンクリート工学年次論文集, Vol.39, No.1, pp.1489-1494, 2017.7</div>
+        <div class="pub-item">エルドンオチル, 藤木諒将, 三島直生, 畑中重光, 超音波によるポーラスコンクリートの空隙率および曲げ強度の推定に関する実験的研究, コンクリート工学年次論文集, Vol.38, No.1, pp.1725-1730, 2016.7</div>
+        <div class="pub-item">エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの圧縮強度と曲げ強度の関係に関する実験的研究, コンクリート工学年次論文集, Vol.37, No.1, pp.1345-1350, 2015.7</div>
       </div>
 
-      <!-- 国際会議（査読無し） -->
       <div id="intl" class="pub-panel">
-        <div class="pub-year-heading">2024</div>
-        <ol class="pub-list">
-          <li>Ridengaoqier E, Experimental study on the relationship between dynamic elastic modulus and porosity of pervious concrete, The 10th ACF International Concrete Conference, 2024.8</li>
-          <li>Ridengaoqier E, Quality Evaluation of Pervious Concrete Using AI, The 4th International Civil Engineering and Architecture Conference (CEAC 2024), Seoul, South Korea, 2024.3</li>
-        </ol>
-        <div class="pub-year-heading">2019</div>
-        <ol class="pub-list">
-          <li>E Ridengaoqier, S. Hatanaka, Hammering Test Evaluation of Dynamic Elastic Modulus and Void Ratio of Pervious Concrete, ICAES-19, Boston, USA, pp.60-66, 2019.5</li>
-        </ol>
+        <div class="pub-year">2024</div>
+        <div class="pub-item">Ridengaoqier E, Experimental study on the relationship between dynamic elastic modulus and porosity of pervious concrete, The 10th ACF International Concrete Conference, 2024.8</div>
+        <div class="pub-item">Ridengaoqier E, Quality Evaluation of Pervious Concrete Using AI, CEAC 2024, Seoul, South Korea, 2024.3</div>
+        <div class="pub-year">2019</div>
+        <div class="pub-item">E Ridengaoqier, S. Hatanaka, Hammering Test Evaluation of Dynamic Elastic Modulus and Void Ratio of Pervious Concrete, ICAES-19, Boston, USA, pp.60-66, 2019.5</div>
       </div>
 
-      <!-- 国内会議 -->
       <div id="domestic" class="pub-panel">
-        <div class="pub-year-heading">2024</div>
-        <ol class="pub-list">
-          <li>井田宥文, 今本啓一, 清原千鶴, エルドンオチル, 加熱を受けたコンクリートの物質移動抵抗性の変化と含浸材の影響, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>阿部珠子, 今本啓一, エルドンオチル, 清原千鶴, クリンカーフリーポーラスコンクリートの力学特性と透水性能に関する研究, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>井野黎來, 今本啓一, 木野瀬透, 江尻憲泰, エルドンオチル, 清原千鶴, 富岡製糸場内の鉄筋コンクリート造煙突の劣化調査, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>橋本聖矢, 今本啓一, エルドンオチル, 佐藤幸一, 清原千鶴, 飯澤尚哉, 小倉颯太, 3Dプリンターによる蟻害劣化を受けたCLTへの樹脂充填方法の検討, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>小倉颯太, 今本啓一, エルドンオチル, 清原千鶴, 佐藤幸一, 打撃音による蟻害を受けた木材および樹脂充填材の曲げ弾性係数推定, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>小田島由梨, 今本啓一, 清原千鶴, 崎原康平, 根路銘安史, 木野瀬透, チンジョンイ, エルドンオチル, 大宜味村役場旧庁舎の周辺環境及びコンクリート調査, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>石綿凜, 今本啓一, 根路銘安史, エルドンオチル, 清原千鶴, 内在塩分を有するちとせ商店街ビルの損傷調査, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>中嶋亮介, 今本啓一, エルドンオチル, 清原千鶴, ラムネ温泉における焼杉の劣化調査, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>飯澤尚哉, 今本啓一, 清原千鶴, エルドンオチル, 大西郷, 那須秀行, 仮設資材としての敷鉄板の利用を意図したCLTの適用性に関する研究, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-          <li>尾崎勇太, 今本啓一, エルドンオチル, 清原千鶴, 田中章夫, 澁井雄斗, 端島共通験を踏まえた腐食促進試験方法の提案, 第94回日本建築学会東海支部研究報告集, 2024.3</li>
-        </ol>
-
-        <div class="pub-year-heading">2023</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 栗田哲, 金澤健司, Colabによる打音法を用いたポーラスコンクリートの動弾性係数の測定に関する基礎的研究, 2023年度日本建築学会大会学術講演梗概集, 2023.9</li>
-          <li>小倉颯太, 今本啓一, エルドンオチル, 清原千鶴 他, 非/微破壊手法を用いた蟻害を受けた木材の劣化診断法に関する基礎的研究, 2023年度日本建築学会大会学術講演梗概集, 2023.9</li>
-          <li>清原千鶴, 今本啓一, エルドンオチル, パラフィン系相変化材料を含有する建材の温度上昇抑制効果に関する基礎的研究, 2023年度日本建築学会大会学術講演梗概集, 2023.9</li>
-          <li>羽田浩二, 栗田哲 他, エルドンオチル, 常時微動観測に基づく高知県中土佐町旧消防署庁舎の振動性状の把握, 2023年度日本建築学会大会学術講演梗概集, 2023.9</li>
-          <li>栗田哲, エルドンオチル, 起振機実験と微動測定に基づく小振幅時のスマートフォンの振動測定精度の検証, 2023年度日本建築学会大会学術講演梗概集, 2023.9</li>
-        </ol>
-
-        <div class="pub-year-heading">2020〜2022</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 栗田哲, AIによる透水性コンクリートの空隙率推定方法の提案, 2022年度日本建築学会大会学術講演梗概集, 2022.9</li>
-          <li>エルドンオチル, 畑中重光, 動弾性特性に基づく透水性コンクリートの空隙率推定に関する研究, 第7回コンクリート構造物の非破壊検査シンポジウム, 2022.8</li>
-          <li>竹本彬人, 栗田哲, Ridengaoqier E, SRC造11階建物の床スラブの上下振動特性（起振機実験）, 2021年度日本建築学会大会学術講演梗概集, 2021.9</li>
-          <li>Ridengaoqier E, 栗田哲, 竹本彬人, SRC造11階建物の床スラブの上下振動特性（FEM解析と起振機実験の比較）, 2021年度日本建築学会大会学術講演梗概集, 2021.9</li>
-          <li>エルドンオチル, 畑中重光, ポーラスコンクリートの動弾性係数−空隙率関係に及ぼす骨材粒径および空隙径の影響, 2020年度日本建築学会大会学術講演梗概集, pp.489-490, 2020.9</li>
-        </ol>
-
-        <div class="pub-year-heading">2015〜2019</div>
-        <ol class="pub-list">
-          <li>エルドンオチル, 曹偉, 畑中重光, FFT分析による卓越周波数を用いたポーラスコンクリートの空隙率推定に関する研究, 日本建築学会大会学術講演梗概集, pp.137-138, 2018.9</li>
-          <li>エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの超音波伝播速度測定へのシリコーンシートの適用性に関する基本的研究, 日本建築学会大会学術講演梗概集, pp.77-78, 2017.9</li>
-          <li>エルドンオチル, 三島直生, 畑中重光, ポーラスコンクリートの超音波伝播速度測定に対するシリコーンシートの適用性について基本的研究, 日本建築学会大会学術講演梗概集, pp.635-636, 2016.9</li>
-          <li>三島直生, エルドンオチル, 畑中重光 他, 現場施工されたポーラスコンクリートスラブの品質評価に関する実験的研究（その1）, 日本建築学会学術講演梗概集, pp555-556, 2015.9</li>
-          <li>エルドンオチル, 三島直生, 畑中重光 他, 現場施工されたポーラスコンクリートスラブの品質評価に関する実験的研究（その2）, 日本建築学会学術講演梗概集, pp557-558, 2015.9</li>
-        </ol>
+        <div class="pub-year">2024</div>
+        <div class="pub-item">井田宥文, 今本啓一, 清原千鶴, エルドンオチル, 加熱を受けたコンクリートの物質移動抵抗性の変化と含浸材の影響, 第94回日本建築学会東海支部研究報告集, 2024.3</div>
+        <div class="pub-item">阿部珠子, 今本啓一, エルドンオチル, 清原千鶴, クリンカーフリーポーラスコンクリートの力学特性と透水性能に関する研究, 第94回日本建築学会東海支部研究報告集, 2024.3</div>
+        <div class="pub-item">井野黎來, 今本啓一, 木野瀬透, 江尻憲泰, エルドンオチル, 清原千鶴, 富岡製糸場内の鉄筋コンクリート造煙突の劣化調査, 第94回日本建築学会東海支部研究報告集, 2024.3</div>
+        <div class="pub-item">橋本聖矢, 今本啓一, エルドンオチル 他, 3Dプリンターによる蟻害劣化を受けたCLTへの樹脂充填方法の検討, 第94回日本建築学会東海支部研究報告集, 2024.3</div>
+        <div class="pub-item">小倉颯太, 今本啓一, エルドンオチル, 清原千鶴 他, 打撃音による蟻害を受けた木材および樹脂充填材の曲げ弾性係数推定, 第94回日本建築学会東海支部研究報告集, 2024.3</div>
+        <div class="pub-year">2023</div>
+        <div class="pub-item">エルドンオチル, 栗田哲, 金澤健司, Colabによる打音法を用いたポーラスコンクリートの動弾性係数の測定に関する基礎的研究, 2023年度日本建築学会大会学術講演梗概集, 2023.9</div>
+        <div class="pub-item">清原千鶴, 今本啓一, エルドンオチル, パラフィン系相変化材料を含有する建材の温度上昇抑制効果に関する基礎的研究, 2023年度日本建築学会大会学術講演梗概集, 2023.9</div>
+        <div class="pub-item">栗田哲, エルドンオチル, 起振機実験と微動測定に基づく小振幅時のスマートフォンの振動測定精度の検証, 2023年度日本建築学会大会学術講演梗概集, 2023.9</div>
+        <div class="pub-year">2020 — 2022</div>
+        <div class="pub-item">エルドンオチル, 栗田哲, AIによる透水性コンクリートの空隙率推定方法の提案, 2022年度日本建築学会大会学術講演梗概集, 2022.9</div>
+        <div class="pub-item">エルドンオチル, 畑中重光, 動弾性特性に基づく透水性コンクリートの空隙率推定に関する研究, 第7回コンクリート構造物の非破壊検査シンポジウム, 2022.8</div>
+        <div class="pub-item">エルドンオチル, 畑中重光, ポーラスコンクリートの動弾性係数−空隙率関係に及ぼす骨材粒径および空隙径の影響, 2020年度日本建築学会大会学術講演梗概集, 2020.9</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 学会活動 -->
-  <section id="activities">
-    <h3 class="section-title">所属学会</h3>
-    <div class="society-grid" style="margin-bottom: 24px;">
-      <span class="society-tag">日本建築学会</span>
-      <span class="society-tag">日本コンクリート工学会</span>
-      <span class="society-tag">日本土木学会</span>
-      <span class="society-tag">Asian Concrete Federation</span>
+<!-- Societies -->
+<section class="section" id="societies">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Affiliations</span>
+      <h2 class="section-heading">所属学会・活動</h2>
     </div>
-
-    <h3 class="section-title">学協会活動</h3>
-    <div class="card">
+    <div class="fade-in">
+      <div class="society-tags">
+        <span class="society-tag">日本建築学会</span>
+        <span class="society-tag">日本コンクリート工学会</span>
+        <span class="society-tag">日本土木学会</span>
+        <span class="society-tag">Asian Concrete Federation</span>
+      </div>
       <ul class="activity-list">
         <li>日本建築学会東海支部 材料施工委員会委員（2025年7月〜）</li>
         <li>日本コンクリート工学会 文献調査委員会委員（2025年4月〜）</li>
@@ -772,48 +1120,80 @@
         <li>一般社団法人日本透水性コンクリート協会 学術委員会委員（2020年5月〜）</li>
       </ul>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- メディア・取材 -->
-  <section id="news">
-    <h3 class="section-title">メディア・取材記事</h3>
-    <div class="card">
-      <ul class="news-list">
-        <li>
-          <span class="news-tag">取材</span>
-          <div>
-            <a href="https://note.com/lab_intro/n/ncf10eb1cd871" target="_blank" rel="noopener">エルドンオチル先生インタビュー記事</a>
-            <div class="news-desc">研究内容や研究室の紹介についてのインタビュー記事（note）</div>
-          </div>
-        </li>
-        <li>
-          <span class="news-tag">取材</span>
-          <div>
-            <a href="https://note.com/lab_intro/n/nafcb5cdc46d3" target="_blank" rel="noopener">研究室の学生インタビュー記事</a>
-            <div class="news-desc">研究室に所属する学生へのインタビュー記事（note）</div>
-          </div>
-        </li>
-      </ul>
+<!-- Media -->
+<section class="section media-section" id="media">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">Media</span>
+      <h2 class="section-heading">メディア・取材記事</h2>
     </div>
-  </section>
+    <div class="media-grid fade-in">
+      <a href="https://note.com/lab_intro/n/ncf10eb1cd871" target="_blank" rel="noopener" class="media-card">
+        <span class="media-tag">Interview</span>
+        <h4>エルドンオチル先生<br>インタビュー記事</h4>
+        <p>研究内容や研究室の紹介についてのインタビュー</p>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a href="https://note.com/lab_intro/n/nafcb5cdc46d3" target="_blank" rel="noopener" class="media-card">
+        <span class="media-tag">Interview</span>
+        <h4>研究室の学生<br>インタビュー記事</h4>
+        <p>研究室に所属する学生へのインタビュー</p>
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-</main>
-
+<!-- Footer -->
 <footer>
-  <div class="footer-info">
-    <strong>建築材料・施工研究室</strong><br>
-    静岡理工科大学 理工学部 建築学科<br>
-    〒437-8555 静岡県袋井市豊沢2200-2
+  <div class="footer-inner">
+    <div class="footer-info">
+      <h5>建築材料・施工研究室</h5>
+      <p>静岡理工科大学 理工学部 建築学科<br>〒437-8555 静岡県袋井市豊沢2200-2</p>
+    </div>
+    <span class="footer-copy">&copy; 2026 Architectural Materials &amp; Construction Lab</span>
   </div>
 </footer>
 
 <script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Scroll-triggered fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Publication tabs
 function switchTab(btn, tabId) {
-  document.querySelectorAll('.pub-tab').forEach(function(t) { t.classList.remove('active'); });
-  document.querySelectorAll('.pub-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.pub-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pub-panel').forEach(p => p.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
 }
+
+// Smooth parallax on hero image
+window.addEventListener('scroll', () => {
+  const hero = document.querySelector('.hero-image img');
+  if (hero) {
+    const scrolled = window.scrollY;
+    hero.style.transform = `translateY(${scrolled * 0.3}px) scale(1.05)`;
+  }
+});
 </script>
 
 </body>
