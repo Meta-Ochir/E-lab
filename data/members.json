@@ -1,0 +1,20 @@
+{
+  "year": "2026",
+  "professor": {
+    "name": "エルドンオチル",
+    "nameEn": "E Ridengaoqier",
+    "title": "博士（工学）",
+    "photo": "images/professor.jpeg",
+    "affiliation": "静岡理工科大学 理工学部 建築学科",
+    "specialty": "建築材料学・コンクリート工学・非破壊検査・AI応用",
+    "research": "ポーラスコンクリートの品質評価、深層学習による構造部材の劣化予測、非破壊試験法の開発",
+    "degree": "博士（工学）三重大学, 2019"
+  },
+  "students": [
+    { "name": "大畑 亮輔", "grade": "4年生", "photo": "images/ohata.jpg" },
+    { "name": "小木曽 太一", "grade": "4年生", "photo": "images/ogiso.jpg" },
+    { "name": "宮田 恭輔", "grade": "4年生", "photo": "images/miyata.jpg" },
+    { "name": "山河 拓馬", "grade": "4年生", "photo": "images/yamakawa.jpg" },
+    { "name": "山田 匠海", "grade": "4年生", "photo": "images/yamada.jpg" }
+  ]
+}

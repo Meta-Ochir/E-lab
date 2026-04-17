@@ -1,0 +1,56 @@
+[
+  {
+    "title": "ポーラスコンクリートの品質評価",
+    "titleEn": "Pervious Concrete Quality Evaluation",
+    "icon": "concrete",
+    "description": "透水性・透気性に優れた環境配慮型ポーラスコンクリートの空隙率・強度を、超音波・打音法・AIで非破壊評価する技術を開発。都市のヒートアイランド対策や雨水浸透に貢献する持続可能なインフラ材料の品質保証を実現します。",
+    "tags": ["ポーラスコンクリート", "非破壊検査", "超音波", "環境配慮"],
+    "image": "",
+    "pdf": ""
+  },
+  {
+    "title": "AI × コンクリート劣化診断",
+    "titleEn": "AI-Driven Deterioration Diagnosis",
+    "icon": "ai",
+    "description": "Deep Learning と Generative AI を活用し、鉄筋コンクリート構造物の劣化状態を画像から自動診断。膨大な現場データを学習したモデルが、建築物の長寿命化と維持管理の効率化を支援します。",
+    "tags": ["Deep Learning", "Generative AI", "画像解析", "構造診断"],
+    "image": "",
+    "pdf": ""
+  },
+  {
+    "title": "クリンカーフリーコンクリート",
+    "titleEn": "Clinker-Free Concrete",
+    "icon": "eco",
+    "description": "セメントクリンカーの代わりに高炉スラグ微粉末等の産業副産物を活用し、CO₂排出量を大幅削減した環境配慮型コンクリートを開発。カーボンニュートラル社会の実現に寄与します。",
+    "tags": ["CO₂削減", "産業副産物", "カーボンニュートラル", "高炉スラグ"],
+    "image": "",
+    "pdf": ""
+  },
+  {
+    "title": "スマートフォンによる構造診断",
+    "titleEn": "Smartphone-Based Diagnostics",
+    "icon": "mobile",
+    "description": "スマートフォンの加速度センサーとAIを組み合わせ、建築物の振動特性・動弾性係数を誰でも手軽に測定できるプラットフォームを構築。診断の民主化と災害時の迅速な安全確認を目指します。",
+    "tags": ["IoT", "センサー", "モバイル診断", "振動解析"],
+    "image": "",
+    "pdf": ""
+  },
+  {
+    "title": "木材の非破壊診断技術",
+    "titleEn": "Timber Non-Destructive Testing",
+    "icon": "wood",
+    "description": "蟻害や腐朽の影響を受けた木材建築物を、打音や弾性波で非破壊的に診断。歴史的建造物の保存やCLT材料の品質管理に応用し、木造建築の持続性を高めます。",
+    "tags": ["CLT", "木造", "保存科学", "蟻害診断"],
+    "image": "",
+    "pdf": ""
+  },
+  {
+    "title": "相変化材料（PCM）建材",
+    "titleEn": "Phase Change Material Facades",
+    "icon": "thermal",
+    "description": "パラフィン系相変化材料を含有する外装建材を開発し、日射熱を蓄熱・放出することで建物の冷暖房負荷を低減。Net Zero Energy Building (ZEB) に貢献する次世代スマート建材です。",
+    "tags": ["PCM", "省エネ", "ZEB", "スマート建材"],
+    "image": "",
+    "pdf": ""
+  }
+]
